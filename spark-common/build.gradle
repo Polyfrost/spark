@@ -39,8 +39,8 @@ dependencies {
     implementation('net.kyori:adventure-text-feature-pagination:4.0.0-lucko-SNAPSHOT') {
         exclude(module: 'adventure-api')
     }
-    compileOnly 'com.google.code.gson:gson:2.7'
-    compileOnly 'com.google.guava:guava:19.0'
+    compileOnly 'com.google.code.gson:gson:2.2.4'
+    compileOnly 'com.google.guava:guava:17.0'
     compileOnly 'org.jspecify:jspecify:1.0.0'
 
     // test
@@ -48,8 +48,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    testImplementation 'com.google.code.gson:gson:2.7'
-    testImplementation 'com.google.guava:guava:19.0'
+    testImplementation 'com.google.code.gson:gson:2.2.4'
+    testImplementation 'com.google.guava:guava:17.0'
     testImplementation 'org.jspecify:jspecify:1.0.0'
 
     testImplementation('net.kyori:adventure-text-serializer-ansi:4.17.0') {

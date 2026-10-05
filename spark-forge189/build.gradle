@@ -1,0 +1,62 @@
+plugins {
+    id 'gg.essential.loom' version '1.15.50'
+    id 'com.gradleup.shadow'
+}
+
+configurations {
+    shade
+    implementation.extendsFrom shade
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:1.8.9'
+    mappings 'de.oceanlabs.mcp:mcp_stable:22-1.8.9'
+    forge 'net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9'
+    shade project(':spark-common')
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand (
+                'pluginVersion': project.pluginVersion,
+                'pluginDescription': project.pluginDescription
+        )
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+shadowJar {
+    archiveClassifier = 'dev'
+    configurations = [project.configurations.shade]
+
+    relocate 'net.kyori.adventure', 'me.lucko.spark.lib.adventure'
+    relocate 'net.kyori.examination', 'me.lucko.spark.lib.adventure.examination'
+    relocate 'net.kyori.option', 'me.lucko.spark.lib.adventure.option'
+    relocate 'net.bytebuddy', 'me.lucko.spark.lib.bytebuddy'
+    relocate 'com.google.protobuf', 'me.lucko.spark.lib.protobuf'
+    relocate 'org.objectweb.asm', 'me.lucko.spark.lib.asm'
+    relocate 'one.profiler', 'me.lucko.spark.lib.asyncprofiler'
+    relocate 'me.lucko.bytesocks.client', 'me.lucko.spark.lib.bytesocks'
+    relocate 'org.java_websocket', 'me.lucko.spark.lib.bytesocks.ws'
+
+    project.applyExcludes(delegate)
+}
+
+remapJar {
+    inputFile = shadowJar.archiveFile
+    archiveFileName = "spark-${project.pluginVersion}-forge-1.8.9.jar"
+}
+
+artifacts {
+    archives remapJar
+}
+
+tasks.withType(JavaExec).configureEach {
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}

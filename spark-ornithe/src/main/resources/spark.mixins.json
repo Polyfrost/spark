@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "me.lucko.spark.ornithe.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "plugin": "me.lucko.spark.ornithe.plugin.OrnitheSparkMixinPlugin",
+  "client": [
+    "ChatScreenMixin",
+    "LocalClientPlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

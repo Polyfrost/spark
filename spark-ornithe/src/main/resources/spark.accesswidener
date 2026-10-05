@@ -1,0 +1,4 @@
+accessWidener v2 named
+
+accessible field net/minecraft/client/world/chunk/ClientChunkCache chunks Ljava/util/List;
+accessible field net/minecraft/entity/Entities TYPE_TO_KEY Ljava/util/Map;

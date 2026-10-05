@@ -1,0 +1,9 @@
+[{
+  "modid": "spark",
+  "name": "spark",
+  "description": "${pluginDescription}",
+  "version": "${pluginVersion}",
+  "mcversion": "1.8.9",
+  "url": "https://spark.lucko.me/",
+  "authorList": ["Luck"]
+}]

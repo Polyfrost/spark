@@ -11,8 +11,16 @@ pluginManagement {
             url = 'https://maven.minecraftforge.net/'
         }
         maven {
-            name = 'NeoForge'
-            url = 'https://maven.neoforged.net/releases'
+            name = 'Ornithe'
+            url = 'https://maven.ornithemc.net/releases'
+        }
+        maven {
+            name = 'Essential'
+            url = 'https://repo.essential.gg/repository/maven-public'
+        }
+        maven {
+            name = 'Architectury'
+            url = 'https://maven.architectury.dev/'
         }
     }
 }
@@ -27,10 +35,8 @@ include (
         'spark-bukkit',
         'spark-bungeecord',
         'spark-common',
-        'spark-fabric',
-        'spark-forge',
-        'spark-minecraft',
-        'spark-neoforge',
+        'spark-forge189',
+        'spark-ornithe',
         'spark-paper',
         'spark-sponge',
         'spark-standalone-agent',

@@ -147,7 +147,7 @@ public class FileConfiguration implements Configuration {
     public void setStringList(String path, List<String> value) {
         JsonArray array = new JsonArray();
         for (String str : value) {
-            array.add(str);
+            array.add(new JsonPrimitive(str));
         }
         this.root.add(path, array);
     }

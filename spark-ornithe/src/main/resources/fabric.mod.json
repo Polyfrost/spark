@@ -1,0 +1,36 @@
+{
+    "schemaVersion": 1,
+    "id": "spark",
+    "name": "spark",
+    "version": "${pluginVersion}",
+    "description": "${pluginDescription}",
+    "authors": [
+        "Luck"
+    ],
+    "icon": "assets/spark/icon.png",
+    "contact": {
+        "homepage": "https://spark.lucko.me/",
+        "sources": "https://github.com/lucko/spark",
+        "issues": "https://github.com/lucko/spark/issues"
+    },
+    "license": "GNU General Public License v3.0",
+    "environment": "*",
+    "entrypoints": {
+        "init": [
+            "me.lucko.spark.ornithe.OrnitheSparkMod"
+        ],
+        "client-init": [
+            "me.lucko.spark.ornithe.OrnitheSparkMod"
+        ]
+    },
+    "mixins": [
+        "spark.mixins.json"
+    ],
+    "accessWidener": "spark.accesswidener",
+    "depends": {
+        "fabricloader": ">=0.18.4",
+        "minecraft": "1.8.9",
+        "osl-entrypoints": "*",
+        "osl-lifecycle-events": "*"
+    }
+}
