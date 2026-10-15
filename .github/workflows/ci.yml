@@ -3,12 +3,12 @@ name: Build Gradle
 on:
   push:
     branches:
-      - 'master'
+      - 'legacy-1.8.9'
     tags:
-      - 'v*'
+      - '*\+mc1.8.9'
   pull_request:
     branches:
-      - 'master'
+      - 'legacy-1.8.9'
 
 env:
   REGISTRY: ghcr.io
@@ -41,12 +41,14 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run build and tests with Gradle wrapper
-        run: ./gradlew test build
+        run: ./gradlew :spark-ornithe:test :spark-ornithe:build
 
-      - name: Upload all artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
         if: matrix.os == 'ubuntu-latest'
         with:
           name: jars
           path: |
-            **/build/libs/spark-1.*-*.jar
+            spark-ornithe/build/libs/spark-1.*-*.jar
+          archive: false
+          if-no-files-found: error
