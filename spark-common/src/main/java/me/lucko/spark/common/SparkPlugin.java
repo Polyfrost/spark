@@ -38,6 +38,8 @@ import me.lucko.spark.common.util.classfinder.ClassFinder;
 import me.lucko.spark.common.util.classfinder.FallbackClassFinder;
 import me.lucko.spark.common.util.classfinder.InstrumentationClassFinder;
 import me.lucko.spark.common.util.log.Logger;
+import me.lucko.spark.proto.SparkHeapProtos.HeapData;
+import me.lucko.spark.proto.SparkSamplerProtos.SamplerData;
 
 import java.nio.file.Path;
 import java.util.Collection;
@@ -211,6 +213,28 @@ public interface SparkPlugin extends Logger {
      * @return information about the platform
      */
     PlatformInfo getPlatformInfo();
+
+    /**
+     * Remaps class and method names in exported sampler data, e.g. from
+     * runtime mappings to human-readable ones.
+     *
+     * <p>Called after class sources have been resolved using the runtime names.</p>
+     *
+     * @param proto the sampler data to remap in place
+     */
+    default void remapSamplerData(SamplerData.Builder proto) {
+
+    }
+
+    /**
+     * Remaps class names in exported heap summary data, e.g. from
+     * runtime mappings to human-readable ones.
+     *
+     * @param proto the heap data to remap in place
+     */
+    default void remapHeapData(HeapData.Builder proto) {
+
+    }
 
     default void registerApi(Spark api) {
 

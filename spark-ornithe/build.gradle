@@ -4,6 +4,10 @@ plugins {
     id 'com.gradleup.shadow'
 }
 
+import net.fabricmc.mappingio.MappingReader
+import net.fabricmc.mappingio.tree.MappingTreeView.ElementMappingView
+import net.fabricmc.mappingio.tree.MemoryMappingTree
+
 ploceus {
     setIntermediaryGeneration(2)
 }
@@ -19,9 +23,50 @@ dependencies {
     modImplementation 'net.fabricmc:fabric-loader:0.18.4'
     ploceus.dependOsl('0.21.0')
     shade project(':spark-common')
+
+    testImplementation platform('org.junit:junit-bom:5.11.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform {}
+}
+
+// intermediary -> named class and method names, used by FeatherRemapper
+def generateFeatherMappings = tasks.register('generateFeatherMappings') {
+    def tiny = provider { loom.mappingConfiguration.tinyMappings.toFile() }
+    def output = layout.buildDirectory.file('generated/feather/mappings.txt')
+    inputs.file(tiny)
+    outputs.file(output)
+
+    doLast {
+        def tree = new MemoryMappingTree()
+        MappingReader.read(tiny.get().toPath(), tree)
+        int src = tree.getNamespaceId('intermediary')
+        int dst = tree.getNamespaceId('named')
+
+        output.get().asFile.withWriter('UTF-8') { writer ->
+            def write = { ElementMappingView element ->
+                def from = element.getName(src)
+                def to = element.getName(dst)
+                if (from != null && to != null && from != to) {
+                    writer << from << '\t' << to << '\n'
+                }
+            }
+            tree.classes.each { cls ->
+                write(cls)
+                cls.methods.each(write)
+            }
+        }
+    }
 }
 
 processResources {
+    from(generateFeatherMappings) {
+        into 'assets/spark'
+    }
+
     from(sourceSets.main.resources.srcDirs) {
         include 'fabric.mod.json'
         expand (

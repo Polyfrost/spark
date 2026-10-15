@@ -233,5 +233,6 @@ public abstract class AbstractSampler implements Sampler {
         }
 
         classSourceVisitor.exportToProto(proto);
+        this.platform.getPlugin().remapSamplerData(proto);
     }
 }

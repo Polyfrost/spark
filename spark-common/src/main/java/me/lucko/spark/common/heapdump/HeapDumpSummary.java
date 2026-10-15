@@ -140,6 +140,7 @@ public final class HeapDumpSummary {
         for (Entry entry : this.entries) {
             proto.addEntries(entry.toProto());
         }
+        platform.getPlugin().remapHeapData(proto);
 
         return proto.build();
     }

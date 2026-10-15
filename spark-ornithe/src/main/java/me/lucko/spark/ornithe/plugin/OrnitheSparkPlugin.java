@@ -24,8 +24,11 @@ import me.lucko.spark.common.SparkPlatform;
 import me.lucko.spark.common.SparkPlugin;
 import me.lucko.spark.common.sampler.source.ClassSourceLookup;
 import me.lucko.spark.common.sampler.source.SourceMetadata;
+import me.lucko.spark.ornithe.FeatherRemapper;
 import me.lucko.spark.ornithe.OrnitheClassSourceLookup;
 import me.lucko.spark.ornithe.OrnitheSparkMod;
+import me.lucko.spark.proto.SparkHeapProtos.HeapData;
+import me.lucko.spark.proto.SparkSamplerProtos.SamplerData;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.Person;
 import net.minecraft.server.command.source.CommandSource;
@@ -109,6 +112,16 @@ public abstract class OrnitheSparkPlugin implements SparkPlugin {
     @Override
     public ClassSourceLookup createClassSourceLookup() {
         return new OrnitheClassSourceLookup(createClassFinder());
+    }
+
+    @Override
+    public void remapSamplerData(SamplerData.Builder proto) {
+        FeatherRemapper.remap(proto);
+    }
+
+    @Override
+    public void remapHeapData(HeapData.Builder proto) {
+        FeatherRemapper.remap(proto);
     }
 
     @Override
